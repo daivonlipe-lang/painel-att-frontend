@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Painel ATT</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="topo">
+      <div class="titulo">
+        <h1>Painel ATT - Admin</h1>
+        <p>Controle geral de entradas, pedidos e links dos funcionários</p>
+      </div>
+
+      <div class="topo-acoes">
+        <button class="botao" onclick="abrirModalAdicionar()">+ Adicionar funcionário</button>
+        <button class="botao sair" onclick="logout()">Sair</button>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <span>Total de pessoas</span>
+        <strong id="totalPessoas">0</strong>
+      </div>
+
+      <div class="card">
+        <span>Total de entradas</span>
+        <strong id="totalEntradas">0</strong>
+      </div>
+
+      <div class="card">
+        <span>Total de pedidos</span>
+        <strong id="totalPedidos">0</strong>
+      </div>
+
+      <div class="card">
+        <span>Top do ranking</span>
+        <strong id="topRanking">-</strong>
+      </div>
+    </div>
+
+    <div class="painel">
+      <div class="barra">
+        <input
+          type="text"
+          id="busca"
+          class="busca"
+          placeholder="Pesquisar funcionário..."
+        />
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Posição</th>
+            <th>Nome</th>
+            <th>Entradas</th>
+            <th>Pedidos</th>
+            <th>Status</th>
+            <th>Link</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaBody"></tbody>
+      </table>
+
+      <div class="vazio" id="mensagemVazia">Nenhum resultado encontrado.</div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <div id="modalAdicionar" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-topo">
+        <h2>Adicionar funcionário</h2>
+        <button class="modal-fechar" onclick="fecharModalAdicionar()">×</button>
+      </div>
+
+      <form id="formAdicionar" class="modal-form">
+        <div class="campo">
+          <label for="addNome">Nome</label>
+          <input type="text" id="addNome" required />
+        </div>
+
+        <div class="campo">
+          <label for="addUsuario">Usuário</label>
+          <input type="text" id="addUsuario" required />
+        </div>
+
+        <div class="campo">
+          <label for="addSenha">Senha</label>
+          <input type="text" id="addSenha" required />
+        </div>
+
+        <div class="campo">
+          <label for="addLink">Link</label>
+          <input type="text" id="addLink" required />
+        </div>
+
+        <div class="modal-acoes">
+          <button type="button" class="botao botao-secundario" onclick="fecharModalAdicionar()">Cancelar</button>
+          <button type="submit" class="botao">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modalEditar" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-topo">
+        <h2>Editar funcionário</h2>
+        <button class="modal-fechar" onclick="fecharModalEditar()">×</button>
+      </div>
+
+      <form id="formEditar" class="modal-form">
+        <input type="hidden" id="editId" />
+
+        <div class="campo">
+          <label for="editNome">Nome</label>
+          <input type="text" id="editNome" required />
+        </div>
+
+        <div class="campo">
+          <label for="editUsuario">Usuário</label>
+          <input type="text" id="editUsuario" required />
+        </div>
+
+        <div class="campo">
+          <label for="editSenha">Nova senha</label>
+          <input type="text" id="editSenha" placeholder="Deixe vazio para manter a atual" />
+        </div>
+
+        <div class="campo">
+          <label for="editLink">Link</label>
+          <input type="text" id="editLink" required />
+        </div>
+
+        <div class="duas-colunas">
+          <div class="campo">
+            <label for="editEntradas">Entradas</label>
+            <input type="number" id="editEntradas" min="0" required />
+          </div>
+
+          <div class="campo">
+            <label for="editPedidos">Pedidos</label>
+            <input type="number" id="editPedidos" min="0" required />
+          </div>
+        </div>
+
+        <div class="modal-acoes">
+          <button type="button" class="botao botao-secundario" onclick="fecharModalEditar()">Cancelar</button>
+          <button type="submit" class="botao">Salvar alterações</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modalExcluir" class="modal-overlay">
+    <div class="modal modal-pequeno">
+      <div class="modal-topo">
+        <h2>Confirmar exclusão</h2>
+        <button class="modal-fechar" onclick="fecharModalExcluir()">×</button>
+      </div>
+
+      <p class="texto-excluir">
+        Tem certeza que deseja excluir <strong id="nomeExcluir">-</strong>?
+      </p>
+
+      <div class="modal-acoes">
+        <button type="button" class="botao botao-secundario" onclick="fecharModalExcluir()">Cancelar</button>
+        <button type="button" class="botao botao-danger" onclick="confirmarExcluir()">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

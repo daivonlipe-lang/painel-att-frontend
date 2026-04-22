@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Funcionário - Painel ATT</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="topo">
+      <div class="titulo">
+        <h1>Painel do Funcionário</h1>
+        <p>Acompanhe seu desempenho</p>
+      </div>
+
+      <button class="botao sair" onclick="logout()">Sair</button>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <span>Seu nome</span>
+        <strong id="funcNome">-</strong>
+      </div>
+      <div class="card">
+        <span>Suas entradas</span>
+        <strong id="funcEntradas">0</strong>
+      </div>
+      <div class="card">
+        <span>Seus pedidos</span>
+        <strong id="funcPedidos">0</strong>
+      </div>
+      <div class="card">
+        <span>Sua posição</span>
+        <strong id="funcPosicao">-</strong>
+      </div>
+    </div>
+
+    <div class="painel painel-funcionario">
+      <h2>Seu link</h2>
+      <div class="link-box">
+        <input type="text" id="linkFuncionario" readonly />
+        <button class="botao" onclick="copiarLink()">Copiar</button>
+      </div>
+
+      <div class="status-box">
+        <span id="funcStatus" class="badge">0 entraram</span>
+      </div>
+    </div>
+
+    <div class="painel">
+      <h2 class="subtitulo-painel">Ranking geral</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Posição</th>
+            <th>Nome</th>
+            <th>Entradas</th>
+            <th>Pedidos</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="rankingBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
