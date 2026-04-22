@@ -22,7 +22,7 @@ function obterUsuarioLogado() {
 function logout() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
-  window.location.href = "login.html";
+  window.location.href = "index.html";
 }
 
 function formatarNumero(valor) {
@@ -119,7 +119,7 @@ function verificarPagina() {
 
   const usuario = obterUsuarioLogado();
   if (!usuario) {
-    window.location.href = "login.html";
+    window.location.href = "index.html";
     return;
   }
 
