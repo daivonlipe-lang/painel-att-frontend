@@ -22,7 +22,9 @@ function obterUsuarioLogado() {
 function logout() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
-  window.location.href = "index.html";
+  sessionStorage.clear();
+
+  window.location.replace("/");
 }
 
 function formatarNumero(valor) {
@@ -112,31 +114,41 @@ function fecharModalExcluir() {
 function verificarPagina() {
   const pagina = window.location.pathname.split("/").pop();
 
-  if (pagina === "login.html" || pagina === "") {
+  const estaNaTelaLogin =
+    pagina === "index.html" ||
+    pagina === "" ||
+    window.location.pathname === "/";
+
+  if (estaNaTelaLogin) {
     iniciarLogin();
     return;
   }
 
   const usuario = obterUsuarioLogado();
+
   if (!usuario) {
-    window.location.href = "index.html";
+    window.location.replace("/");
     return;
   }
 
   if (pagina === "admin.html") {
     if (usuario.tipo !== "admin") {
-      window.location.href = "funcionario.html";
+      window.location.replace("funcionario.html");
       return;
     }
+
     iniciarAdmin();
+    return;
   }
 
   if (pagina === "funcionario.html") {
     if (usuario.tipo !== "funcionario") {
-      window.location.href = "admin.html";
+      window.location.replace("admin.html");
       return;
     }
+
     iniciarFuncionario();
+    return;
   }
 }
 
@@ -176,9 +188,9 @@ function iniciarLogin() {
       salvarSessao(dados.token, dados.usuario);
 
       if (dados.usuario.tipo === "admin") {
-        window.location.href = "admin.html";
+        window.location.replace("admin.html");
       } else {
-        window.location.href = "funcionario.html";
+        window.location.replace("funcionario.html");
       }
     } catch (error) {
       mensagem.textContent = error.message;
@@ -492,7 +504,7 @@ async function iniciarFuncionario() {
 
     renderizarRankingFuncionario([funcionario]);
   } catch (error) {
-    alert(error.message);
+    mostrarToast(error.message, "erro");
   }
 }
 
@@ -531,5 +543,14 @@ function copiarLink() {
   navigator.clipboard.writeText(input.value);
   mostrarToast("Link copiado.", "sucesso");
 }
+
+window.addEventListener("pageshow", function () {
+  const pagina = window.location.pathname.split("/").pop();
+  const usuario = obterUsuarioLogado();
+
+  if ((pagina === "admin.html" || pagina === "funcionario.html") && !usuario) {
+    window.location.replace("/");
+  }
+});
 
 verificarPagina();
